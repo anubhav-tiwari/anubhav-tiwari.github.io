@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<title></title>
+
+	</head>
+	<body>
+		
+	</body>
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+General
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+For Messaging
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+
+<!-- <script type="module"> -->
+	<script type="text/javascript">
+  // Import the functions you need from the SDKs you need
+ // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7XuKzogA5g-LUUVeQSmxqPE7_n4JKP1I",
+    authDomain: "fcmdemo-95e25.firebaseapp.com",
+    projectId: "fcmdemo-95e25",
+    storageBucket: "fcmdemo-95e25.appspot.com",
+    messagingSenderId: "164094211943",
+    appId: "1:164094211943:web:61a0910d0579c8af87a1c2"
+  };
+
+  // Initialize Firebase
+  //const app = initializeApp(firebaseConfig);
+
+  //-------------------------------
+
+
+
+	// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const messaging=firebase.messaging();
+//Custom function made to run firebase service 
+getStartToken();
+
+//This code recieve message from server /your app and print message to console if same tab is opened as of project in browser 
+messaging.onMessage(function(payload){
+console.log("on Message",payload);
+});
+
+
+function getStartToken(){
+	console.log('Inside getStartToken');
+
+	var currentToken = messaging.getToken();
+	console.log(currentToken);
+	if (currentToken) {
+	}else{
+		RequestPermission();
+	}
+
+}
+
+
+
+function RequestPermission(){
+	console.log('inside permission');
+var permission = messaging.requestPermission();
+console.log('permission : '+permission);
+	if (permission === 'granted') {
+		console.log("have Permission");
+		getStartToken();
+	}else {
+		console.log("Permission Denied");
+	}	
+}
+
+
+function sendTokenToServer(token){ 
+	console.log('####################### token is : '+token);
+	setTokenSentToServer(true);
+}
+
+
+function isTokensendTokenToServer() {
+return window.localStorage.getItem('sendTokenToServer') === '1';
+}
+function setTokenSentToServer(sent) {
+window.localStorage.setItem('sendTokenToServer', sent ? '1' : '0');
+}
+
+</script>
+
+
+</html>
